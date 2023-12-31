@@ -14,23 +14,24 @@ import java.util.stream.Collectors;
  */
 public enum JudgeInfoMessageEnum {
 
-    ACCEPTED("成功", "Accepted"),
-    WRONG_ANSWER("答案错误", "Wrong Answer"),
-    COMPILE_ERROR("Compile Error", "编译错误"),
-    MEMORY_LIMIT_EXCEEDED("", "内存溢出"),
-    TIME_LIMIT_EXCEEDED("Time Limit Exceeded", "超时"),
-    PRESENTATION_ERROR("Presentation Error", "展示错误"),
-    WAITING("Waiting", "等待中"),
-    OUTPUT_LIMIT_EXCEEDED("Output Limit Exceeded", "输出溢出"),
-    DANGEROUS_OPERATION("Dangerous Operation", "危险操作"),
-    RUNTIME_ERROR("Runtime Error", "运行错误"),
-    SYSTEM_ERROR("System Error", "系统错误");
+    ACCEPTED("通过", 0),
+    WRONG_ANSWER("答案错误", 1),
+    COMPILE_ERROR("编译错误", 2),
+    RUNTIME_ERROR("运行错误", 3),
+    MEMORY_LIMIT_EXCEEDED("超出内存限制", 4),
+    TIME_LIMIT_EXCEEDED("超出时间限制", 5),
+    OUTPUT_LIMIT_EXCEEDED("输出过长", 6),
+    SYSTEM_ERROR("系统错误", 7),
+    PRESENTATION_ERROR("展示错误", 8),
+    WAITING("等待中", 9),
+    DANGEROUS_OPERATION("危险操作", 10);
+
 
     private final String text;
 
-    private final String value;
+    private final Integer value;
 
-    JudgeInfoMessageEnum(String text, String value) {
+    JudgeInfoMessageEnum(String text, Integer value) {
         this.text = text;
         this.value = value;
     }
@@ -40,9 +41,9 @@ public enum JudgeInfoMessageEnum {
      *
      * @return
      */
-    public static List<String> getValues() {
-        return Arrays.stream(values()).map(item -> item.value).collect(Collectors.toList());
-    }
+//    public static List<String> getValues() {
+//        return Arrays.stream(values()).map(item -> item.value).collect(Collectors.toList());
+//    }
 
     /**
      * 根据 value 获取枚举
@@ -50,7 +51,7 @@ public enum JudgeInfoMessageEnum {
      * @param value
      * @return
      */
-    public static JudgeInfoMessageEnum getEnumByValue(String value) {
+    public static JudgeInfoMessageEnum getEnumByValue(Integer value) {
         if (ObjectUtils.isEmpty(value)) {
             return null;
         }
@@ -62,7 +63,7 @@ public enum JudgeInfoMessageEnum {
         return null;
     }
 
-    public String getValue() {
+    public Integer getValue() {
         return value;
     }
 

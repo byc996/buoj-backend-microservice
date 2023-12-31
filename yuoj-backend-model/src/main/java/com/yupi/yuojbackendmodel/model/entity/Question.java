@@ -1,6 +1,7 @@
 package com.yupi.yuojbackendmodel.model.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.yupi.yuojbackendmodel.model.dto.question.LanguageConfig;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -40,25 +41,30 @@ public class Question implements Serializable {
      */
     private String answer;
 
-    /**
-     * 方法名称
-     */
-    private String methodName;
-
-    /**
-     * 方法参数类型
-     */
-    private String types;
-
-    /**
-     * 返回值类型
-     */
-    private String returnType;
+//    /**
+//     * 方法名称
+//     */
+//    private String methodName;
+//
+//    /**
+//     * 方法参数类型
+//     */
+//    private String types;
+//
+//    /**
+//     * 返回值类型
+//     */
+//    private String returnType;
 
     /**
      * 默认代码
      */
     private String defaultCode;
+
+    /**
+     * 主类
+     */
+    private String mainClass;
 
     /**
      * 题目提交数

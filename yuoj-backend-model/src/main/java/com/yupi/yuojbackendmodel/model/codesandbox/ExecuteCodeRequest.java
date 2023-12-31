@@ -19,7 +19,9 @@ public class ExecuteCodeRequest {
 
     private String language;
 
-    private String methodName;
+    private String mainClass;
 
-    private String paramTypes;
+//    private String methodName;
+//
+//    private String paramTypes;
 }

@@ -68,26 +68,34 @@ public class JudgeServiceImpl implements JudgeService {
         String judgeCaseStr = question.getJudgeCase();
         List<JudgeCase> judgeCaseList = JSONUtil.toList(judgeCaseStr, JudgeCase.class);
         List<String> inputList = judgeCaseList.stream().map(JudgeCase::getInput).collect(Collectors.toList());
-        List<String> types = JSONUtil.toList(question.getTypes(), String.class);
-        String paramTypes = String.join(" ", types);
+//        List<String> types = JSONUtil.toList(question.getTypes(), String.class);
+//        String paramTypes = String.join(" ", types);
+        String mainClass = question.getMainClass();
         ExecuteCodeRequest executeCodeRequest = ExecuteCodeRequest.builder()
                 .code(code)
                 .language(language)
                 .inputList(inputList)
-                .methodName(question.getMethodName())
-                .paramTypes(paramTypes)
+                .mainClass(mainClass)
+//                .methodName(question.getMethodName())
+//                .paramTypes(paramTypes)
                 .build();
         ExecuteCodeResponse executeCodeResponse = codeSandbox.executeCode(executeCodeRequest);
         List<String> outputList = executeCodeResponse.getOutputList();
         // 5）根据沙箱的执行结果，设置题目的判题状态和信息
         JudgeContext judgeContext = new JudgeContext();
-        judgeContext.setJudgeInfo(executeCodeResponse.getJudgeInfo());
+        JudgeInfo judgeInfo = new JudgeInfo();
+        judgeInfo.setStatus(executeCodeResponse.getStatus());
+        judgeInfo.setMessage(executeCodeResponse.getMessage());
+        judgeInfo.setTime(executeCodeResponse.getTime());
+        judgeInfo.setMemory(executeCodeResponse.getMemory() * 1.0);
+        judgeInfo.setDetailMessage(executeCodeResponse.getDetailMessage());
+        judgeContext.setJudgeInfo(judgeInfo);
         judgeContext.setInputList(inputList);
         judgeContext.setOutputList(outputList);
         judgeContext.setJudgeCaseList(judgeCaseList);
         judgeContext.setQuestion(question);
         judgeContext.setQuestionSubmit(questionSubmit);
-        JudgeInfo judgeInfo = judgeManager.doJudge(judgeContext);
+        judgeInfo = judgeManager.doJudge(judgeContext);
         // 6）修改数据库中的判题结果
         questionSubmitUpdate = new QuestionSubmit();
         questionSubmitUpdate.setId(questionSubmitId);
@@ -96,6 +104,10 @@ public class JudgeServiceImpl implements JudgeService {
         update = questionFeignClient.updateQuestionSubmitById(questionSubmitUpdate);
         if (!update) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "题目状态更新错误");
+        }
+        if (judgeInfo.getStatus() == 0) {
+            boolean updateAcceptedNum = questionFeignClient.updateQuestionAcceptedNum(questionId);
+            if (!updateAcceptedNum) throw new BusinessException(ErrorCode.SYSTEM_ERROR, "题目接受数更新错误");
         }
         QuestionSubmit questionSubmitResult = questionFeignClient.getQuestionSubmitById(questionId);
         return questionSubmitResult;

@@ -1,7 +1,9 @@
 package com.yupi.yuojbackendmodel.model.vo;
 
+import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
 import com.yupi.yuojbackendmodel.model.dto.question.JudgeConfig;
+import com.yupi.yuojbackendmodel.model.dto.question.LanguageConfig;
 import com.yupi.yuojbackendmodel.model.entity.Question;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
@@ -39,27 +41,27 @@ public class QuestionVO implements Serializable {
     /**
      * 题目答案
      */
-    private String answer;
+    private LanguageConfig answer;
 
-    /**
-     * 方法名称
-     */
-    private String methodName;
-
-    /**
-     * 方法参数类型
-     */
-    private String types;
-
-    /**
-     * 返回值类型
-     */
-    private String returnType;
+//    /**
+//     * 方法名称
+//     */
+//    private String methodName;
+//
+//    /**
+//     * 方法参数类型
+//     */
+//    private String types;
+//
+//    /**
+//     * 返回值类型
+//     */
+//    private String returnType;
 
     /**
      * 默认代码
      */
-    private String defaultCode;
+    private LanguageConfig defaultCode;
 
     /**
      * 题目提交数
@@ -145,6 +147,8 @@ public class QuestionVO implements Serializable {
         questionVO.setTags(tagList);
         String judgeConfigStr = question.getJudgeConfig();
         questionVO.setJudgeConfig(JSONUtil.toBean(judgeConfigStr, JudgeConfig.class));
+        questionVO.setAnswer(JSONUtil.toBean(question.getAnswer(), LanguageConfig.class));
+        questionVO.setDefaultCode(JSONUtil.toBean(question.getDefaultCode(), LanguageConfig.class));
         return questionVO;
     }
 

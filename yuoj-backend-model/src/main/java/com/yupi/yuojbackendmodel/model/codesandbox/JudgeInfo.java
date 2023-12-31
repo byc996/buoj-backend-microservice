@@ -9,14 +9,24 @@ import lombok.Data;
 public class JudgeInfo {
 
     /**
-     * 程序执行信息
+     * 程序执行信息  比如：通过
      */
     private String message;
 
     /**
+     * 程序执行信息  比如：通过
+     */
+    private String detailMessage;
+
+    /**
+     * 程序执行状态  比如：0
+     */
+    private Integer status;
+
+    /**
      * 消耗内存
      */
-    private Long memory;
+    private Double memory;
 
     /**
      * 消耗时间（KB）

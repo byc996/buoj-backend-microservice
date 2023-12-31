@@ -1,5 +1,7 @@
 package com.yupi.yuojbackendquestionservice.controller.inner;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.yupi.yuojbackendmodel.model.dto.question.QuestionUpdateRequest;
 import com.yupi.yuojbackendmodel.model.entity.Question;
 import com.yupi.yuojbackendmodel.model.entity.QuestionSubmit;
 import com.yupi.yuojbackendquestionservice.service.QuestionService;
@@ -26,6 +28,15 @@ public class QuestionInnerController implements QuestionFeignClient {
     @Override
     public Question getQuestionById(@RequestParam("questionId") long questionId) {
         return questionService.getById(questionId);
+    }
+
+
+    @PostMapping("/update/accepted/num")
+    @Override
+    public boolean updateQuestionAcceptedNum(@RequestBody long questionId) {
+        UpdateWrapper<Question> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("id", questionId).setSql("`acceptedNum`=`acceptedNum`+1");
+        return questionService.update(updateWrapper);
     }
 
     @GetMapping("/question_submit/get/id")

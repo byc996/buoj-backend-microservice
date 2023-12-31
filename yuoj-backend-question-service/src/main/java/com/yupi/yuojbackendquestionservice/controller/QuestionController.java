@@ -1,5 +1,6 @@
 package com.yupi.yuojbackendquestionservice.controller;
 
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.gson.Gson;
 import com.yupi.yuojbackendcommon.annotation.AuthCheck;
@@ -10,6 +11,7 @@ import com.yupi.yuojbackendcommon.common.ResultUtils;
 import com.yupi.yuojbackendcommon.constant.UserConstant;
 import com.yupi.yuojbackendcommon.exception.BusinessException;
 import com.yupi.yuojbackendcommon.exception.ThrowUtils;
+import com.yupi.yuojbackendmodel.model.codesandbox.JudgeInfo;
 import com.yupi.yuojbackendmodel.model.dto.question.*;
 import com.yupi.yuojbackendmodel.model.dto.questionsubmit.QuestionSubmitAddRequest;
 import com.yupi.yuojbackendmodel.model.dto.questionsubmit.QuestionSubmitQueryRequest;
@@ -71,10 +73,10 @@ public class QuestionController {
         if (tags != null) {
             question.setTags(GSON.toJson(tags));
         }
-        List<String> types = questionAddRequest.getTypes();
-        if (types != null) {
-            question.setTypes(GSON.toJson(types));
-        }
+//        List<String> types = questionAddRequest.getTypes();
+//        if (types != null) {
+//            question.setTypes(GSON.toJson(types));
+//        }
         List<JudgeCase> judgeCase = questionAddRequest.getJudgeCase();
         if (judgeCase != null) {
             question.setJudgeCase(GSON.toJson(judgeCase));
@@ -82,6 +84,18 @@ public class QuestionController {
         JudgeConfig judgeConfig = questionAddRequest.getJudgeConfig();
         if (judgeConfig != null) {
             question.setJudgeConfig(GSON.toJson(judgeConfig));
+        }
+        LanguageConfig answer = questionAddRequest.getAnswer();
+        if (judgeConfig != null) {
+            question.setAnswer(GSON.toJson(answer));
+        }
+        LanguageConfig defaultCode = questionAddRequest.getDefaultCode();
+        if (judgeConfig != null) {
+            question.setDefaultCode(GSON.toJson(defaultCode));
+        }
+        LanguageConfig mainClass = questionAddRequest.getMainClass();
+        if (judgeConfig != null) {
+            question.setMainClass(GSON.toJson(mainClass));
         }
         questionService.validQuestion(question, true);
         User loginUser = userFeignClient.getLoginUser(request);
@@ -144,6 +158,18 @@ public class QuestionController {
         JudgeConfig judgeConfig = questionUpdateRequest.getJudgeConfig();
         if (judgeConfig != null) {
             question.setJudgeConfig(GSON.toJson(judgeConfig));
+        }
+        LanguageConfig answer = questionUpdateRequest.getAnswer();
+        if (judgeConfig != null) {
+            question.setAnswer(GSON.toJson(answer));
+        }
+        LanguageConfig defaultCode = questionUpdateRequest.getDefaultCode();
+        if (judgeConfig != null) {
+            question.setDefaultCode(GSON.toJson(defaultCode));
+        }
+        LanguageConfig mainClass = questionUpdateRequest.getMainClass();
+        if (judgeConfig != null) {
+            question.setMainClass(GSON.toJson(mainClass));
         }
         // 参数校验
         questionService.validQuestion(question, false);
@@ -285,6 +311,7 @@ public class QuestionController {
         if (judgeConfig != null) {
             question.setJudgeConfig(GSON.toJson(judgeConfig));
         }
+
         // 参数校验
         questionService.validQuestion(question, false);
         User loginUser = userFeignClient.getLoginUser(request);
@@ -339,6 +366,25 @@ public class QuestionController {
         return ResultUtils.success(questionSubmitService.getQuestionSubmitVOPage(questionSubmitPage, loginUser));
     }
 
+    @GetMapping("/question_submit/get")
+    public BaseResponse<QuestionSubmitVO> getQuestionSubmissionById(long id, HttpServletRequest request) {
+        if (id <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        QuestionSubmit questionSubmit = questionSubmitService.getById(id);
+        if (questionSubmit == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        User loginUser = userFeignClient.getLoginUser(request);
+        // 不是本人或管理员，不能直接获取所有信息
+        if (!questionSubmit.getUserId().equals(loginUser.getId()) && !userFeignClient.isAdmin(loginUser)) {
+            throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
+        }
+        QuestionSubmitVO questionSubmitVO = new QuestionSubmitVO();
+        BeanUtils.copyProperties(questionSubmit, questionSubmitVO);
+        questionSubmitVO.setJudgeInfo(JSONUtil.toBean(questionSubmit.getJudgeInfo(), JudgeInfo.class));
 
+        return ResultUtils.success(questionSubmitVO);
+    }
 
 }

@@ -16,17 +16,33 @@ public class ExecuteCodeResponse {
     private List<String> outputList;
 
     /**
-     * 接口信息
-     */
-    private String message;
-
-    /**
      * 执行状态
      */
     private Integer status;
 
     /**
-     * 判题信息
+     * 执行信息
      */
-    private JudgeInfo judgeInfo;
+    private String message;
+
+    /**
+     * 详细错误信息
+     */
+    private String detailMessage;
+
+
+    /**
+     * 执行时间
+     */
+    private Long time;
+
+    /**
+     * 执行内存
+     */
+    private Long memory;
+
+//    /**
+//     * 判题信息
+//     */
+//    private JudgeInfo judgeInfo;
 }
