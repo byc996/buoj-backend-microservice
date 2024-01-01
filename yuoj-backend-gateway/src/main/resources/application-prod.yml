@@ -20,6 +20,10 @@ spring:
           uri: lb://yuoj-backend-judge-service
           predicates:
             - Path=/api/judge/**
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:8858
+        port: 8719
   application:
     name: yuoj-backend-gateway
   main:
