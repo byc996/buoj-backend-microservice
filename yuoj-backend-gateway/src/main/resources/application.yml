@@ -20,7 +20,6 @@ spring:
     sentinel:
       transport:
         dashboard: 127.0.0.1:8858
-        port: 8719
       eager: true
   application:
     name: yuoj-backend-gateway
