@@ -22,7 +22,7 @@ spring:
             - Path=/api/judge/**
     sentinel:
       transport:
-        dashboard: sentinel:8858
+        dashboard: 34.16.158.90:8858
         port: 8719
       eager: true
   application:
