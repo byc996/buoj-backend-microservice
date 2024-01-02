@@ -22,8 +22,7 @@ spring:
             - Path=/api/judge/**
     sentinel:
       transport:
-        dashboard: 34.16.158.90:8858
-        port: 8719
+        dashboard: sentinel:8858
       eager: true
   application:
     name: yuoj-backend-gateway
