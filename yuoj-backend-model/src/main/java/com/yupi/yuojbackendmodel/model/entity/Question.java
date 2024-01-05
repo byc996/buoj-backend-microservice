@@ -32,6 +32,11 @@ public class Question implements Serializable {
     private String content;
 
     /**
+     * 题目难度 (1-简单;2-中等;3-困难)
+     */
+    private Integer difficulty;
+
+    /**
      * 标签列表（json 数组）
      */
     private String tags;
