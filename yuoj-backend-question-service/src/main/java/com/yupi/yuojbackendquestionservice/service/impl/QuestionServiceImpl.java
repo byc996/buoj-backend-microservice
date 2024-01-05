@@ -57,6 +57,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question>
         }
         String title = question.getTitle();
         String content = question.getContent();
+        Integer difficulty = question.getDifficulty();
         String tags = question.getTags();
         String answer = question.getAnswer();
         String judgeCase = question.getJudgeCase();
@@ -71,6 +72,9 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question>
         }
         if (StringUtils.isNotBlank(content) && content.length() > 8192) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "内容过长");
+        }
+        if (difficulty < 1 || difficulty > 3) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "题目难度不存在");
         }
         if (StringUtils.isNotBlank(answer) && answer.length() > 8192) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "答案过长");
@@ -98,6 +102,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question>
         Long id = questionQueryRequest.getId();
         String title = questionQueryRequest.getTitle();
         String content = questionQueryRequest.getContent();
+        Integer difficulty = questionQueryRequest.getDifficulty();
         List<String> tags = questionQueryRequest.getTags();
 //        String answer = questionQueryRequest.getAnswer();
         Long userId = questionQueryRequest.getUserId();
@@ -114,6 +119,8 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question>
             }
         }
         queryWrapper.eq(ObjectUtils.isNotEmpty(id), "id", id);
+        // 0 代表所有难度
+        queryWrapper.eq(ObjectUtils.isNotEmpty(difficulty) && difficulty > 0, "difficulty", difficulty);
         queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
         queryWrapper.eq("isDelete", false);
         queryWrapper.orderBy(SqlUtils.validSortField(sortField), sortOrder.equals(CommonConstant.SORT_ORDER_ASC),
