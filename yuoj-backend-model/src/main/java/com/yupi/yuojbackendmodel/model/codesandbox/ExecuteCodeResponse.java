@@ -30,6 +30,10 @@ public class ExecuteCodeResponse {
      */
     private String detailMessage;
 
+    /**
+     * 标准输出信息
+     */
+    private String stdOut;
 
     /**
      * 执行时间

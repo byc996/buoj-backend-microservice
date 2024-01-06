@@ -14,9 +14,14 @@ public class JudgeInfo {
     private String message;
 
     /**
-     * 程序执行信息  比如：通过
+     * 详细错误信息
      */
     private String detailMessage;
+
+    /**
+     * 标准输出信息
+     */
+    private String stdOut;
 
     /**
      * 程序执行状态  比如：0

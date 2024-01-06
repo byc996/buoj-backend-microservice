@@ -86,6 +86,7 @@ public class JudgeServiceImpl implements JudgeService {
         JudgeInfo judgeInfo = new JudgeInfo();
         judgeInfo.setStatus(executeCodeResponse.getStatus());
         judgeInfo.setMessage(executeCodeResponse.getMessage());
+        judgeInfo.setStdOut(executeCodeResponse.getStdOut());
         judgeInfo.setTime(executeCodeResponse.getTime());
         judgeInfo.setMemory(executeCodeResponse.getMemory() * 1.0);
         judgeInfo.setDetailMessage(executeCodeResponse.getDetailMessage());
