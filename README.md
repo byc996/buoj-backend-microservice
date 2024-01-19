@@ -1,7 +1,6 @@
 ## 项目介绍
 
-用户在线做题的系统，能够根据用户提交的代码、管理员预先设置的题目输入和输出用例，进行编译代码、运行代码、判断代码运行结果是否正确。
-
+BU OJ后端微服务项目：用户在线做题的系统，能够根据用户提交的代码、管理员预先设置的题目输入和输出用例，进行编译代码、运行代码、判断代码运行结果是否正确。
 **项目地址：** [BU OJ 判题系统](http://oj.bc2996.com/)
 
 ### 项目结构
@@ -31,14 +30,15 @@
 - Java 8
 - MySQL 数据库
 - Spring Boot 2.6.13
+- Spring Cloud Gateway API网关
 - Spring Cloud Alibaba 2021.0.5.0 
-  - Nacos
-  - Spring Cloud Gateway
-  - Sentinel
+  - Nacos 服务注册中心
+  - Sentinel 网关限流
 - Spring Session Redis 分布式登录
 - Hutool 工具类
 - RabbitMQ 消息队列
 - MyBatis & MyBatis-Plus
+- Knife4j & Swagger
 
 ### 前端
 
