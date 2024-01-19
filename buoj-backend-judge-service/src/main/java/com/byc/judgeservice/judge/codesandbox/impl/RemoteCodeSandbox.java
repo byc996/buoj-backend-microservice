@@ -19,13 +19,13 @@ public class RemoteCodeSandbox implements CodeSandbox {
 
     private static final String AUTH_REQUEST_SECRET = "secretKey";
 
+    private static final String REMOTE_HOST = "34.16.153.108";
+    private static final String REMOTE_PORT = "8090";
 
     @Override
     public ExecuteCodeResponse executeCode(ExecuteCodeRequest executeCodeRequest) {
         System.out.println("远程代码沙箱");
-//        String url = "http://1.12.249.231:8090/executeCode";
-//        String url = "http://localhost:8090/executeCode";
-        String url = "http://34.16.153.108:8090/executeCode";
+        String url = String.format("http://%s:%s/executeCode", REMOTE_HOST, REMOTE_PORT);
         String json = JSONUtil.toJsonStr(executeCodeRequest);
         String responseStr = HttpUtil.createPost(url)
                 .header(AUTH_REQUEST_HEADER, AUTH_REQUEST_SECRET)
