@@ -22,9 +22,7 @@
 
 ## 核心业务流程
 
-![img](https://cdn.nlark.com/yuque/0/2024/jpeg/25961647/1705674670091-428c3415-7ff0-4680-81c2-ebc91263d71f.jpeg)
-
-
+![img](https://cdn.nlark.com/yuque/0/2024/jpeg/25961647/1705695949066-586d710d-1be7-4735-80c2-dfbc3c7c3b9f.jpeg)
 
 ## 技术选项
 
