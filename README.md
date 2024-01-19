@@ -31,10 +31,14 @@
 - Java 8
 - MySQL 数据库
 - Spring Boot 2.6.13
-- Spring Cloud Alibaba 2021.0.5.0
+- Spring Cloud Alibaba 2021.0.5.0 
+  - Nacos
+  - Spring Cloud Gateway
+  - Sentinel
 - Spring Session Redis 分布式登录
 - Hutool 工具类
 - RabbitMQ 消息队列
+- MyBatis & MyBatis-Plus
 
 ### 前端
 
